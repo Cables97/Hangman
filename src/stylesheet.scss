@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+
+:root{
+    --font-toon: "Poetsen One", sans-serif;
+
+    --key-w: 82px;
+    --key-h: 64px;
+    --key-text: 48px;
+    --key-color: white;
+    --key-shadow: #a1a1a1;
+    --key-base: #3b3b3b;
+    --key-down: #a1a1a1;
+}
+
+
+@mixin button-txt {
+    font-family: var(--font-toon);
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--key-text);
+    margin:0;
+    line-height: 100%;
+}
+
+@mixin border {
+    border:1px solid red;
+}
+
+
+
+body{
+    padding:0;
+    margin:0;
+    background-color: rgb(27, 27, 27);
+}
+
+.keyboard{
+    display:flex;
+    width: 60%;
+    margin:auto;
+}
+
+
+.key{
+    position: relative;
+    display: inline-block;
+    height: calc( var(--key-h) );
+    width: calc( var(--key-w) );
+    background: var(--key-shadow);
+    background: linear-gradient(180deg, rgba(255,255,255,0.27493004037552526) 90%, rgba(0,0,0,0.2413165949973739) 100%);
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0  0px rgba(200, 200, 200, 20%);
+
+
+    &::after{
+        position: absolute;
+        content: attr(data-label);
+        //z-index: -1;
+        height: var(--key-h);
+        width: var(--key-w);
+        bottom: 10px;
+        left:50%;
+        transform: translate(-50%,0);
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        @include button-txt();
+        background-color: var(--key-color);
+        transition: 0.1s;
+    }
+
+    &::before{
+        position: absolute;
+        content: attr(data-label);
+        z-index: -1;
+        height: calc( var(--key-h) + 5px);
+        width: calc( var(--key-w) + 5px);
+        background-color: var(--key-base);
+        box-shadow: 0px 2px 0 2px #2b2b2b ;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        margin:0;
+        padding:0;
+        border-radius: 4px;
+    }
+
+
+    &:hover::after{
+        bottom:5px;
+    }
+
+    &.active::after{
+        bottom:5px;
+        background-color: var(--key-down);
+        animation: button-click 0.1s ease-in-out forwards;
+    }
+    &.up::after{
+        animation: button-click 0.1s ease-in-out forwards reverse;
+    }
+
+}
+
+
+
+@keyframes button-click {
+    0%{
+        bottom:5px
+    }
+    50%{
+        bottom:2px;
+    }
+    100%{
+        bottom:5px;
+    }
+}
