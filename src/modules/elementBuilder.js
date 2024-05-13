@@ -9,7 +9,6 @@ function buildKeyboard(){
 
     for(let i = 0; i < arrayAlphabet.length ; i++){
         let letter = arrayAlphabet[i];
-
         let button = document.createElement('div');
         button.classList.add(letter);
         button.classList.add("btn");
@@ -25,7 +24,7 @@ function buildKeyboard(){
 
 function buildBlankBox(word){
     console.log(word[0])
-    const arrayWord = word[0]["word"].split("");
+    const arrayWord = word.split("");
     arrayWord.forEach(letter => {
         buildBlank(letter)
     });  
@@ -36,6 +35,7 @@ function buildBlank(letter){
 
     let blank = document.createElement('div');
         blank.classList.add("blank");
+        blank.classList.add(letter)
         domBlanksBox.append(blank);
 
     let left = document.createElement('div');

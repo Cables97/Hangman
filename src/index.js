@@ -27,8 +27,11 @@ let randomWordDict  = await dictFind(randWord);
 return randomWordDict
 }
 
-let word = await randomWordGen();
-const arrayWord = word[0]["word"].split("");
+//let word = await randomWordGen();
+let word = "canada"
+//const arrayWord = word[0]["word"].split("");
+const arrayWord = word.split("");
+
 //----------------------------------
 // Keyboard Init
 //----------------------------------
@@ -93,36 +96,40 @@ function letterCheck(letter){
 }
 
 function letterReveal(letter){
-    let blanks = document.querySelectorAll(".blank");
-    
+    let blanks = document.querySelectorAll("." + letter);
+    console.log("letterReveal")
+    const delay = 500; // 1 second
     blanks.forEach(blank => {
-        
-        let lett = blank.getElementsByClassName("letter")[0].innerHTML
-        if(lett === letter){
-            setTimeout(function() {
-                console.log("banana " + letter)
-            }, 1000);
-        }
+        console.log("reveal loop...")
+        console.log(blanks)
+        addClassWithDelay(blanks, 'trigger', delay);
     })
 }
 
-function winCheck(){
-}
+//----------------------------------
+//  Letter Checking
+//----------------------------------
 
-let timer;
-let domTimer = document.getElementById("timer");
 
-//timerInit();
 
-function timerInit(){
-    timer = 0;
-    setInterval(timerInc, 1000);
+function addClassWithDelay(elements, className, delay) {
+    let index = 0;
+    console.log("loop #: " + index)
+    function addClass() {
+      // Check if we have reached the end of the elements list
+      if (index >= elements.length) {
+        return;
+      }
+      // Add the class to the current element
+      elements[index].classList.add(className);
+      // Move to the next element
+      index++;
+      // If there are still elements left, set a timeout for the next iteration
+      if (index < elements.length) {
+        setTimeout(addClass, delay);
+      }
+    }
+    // Start the loop
+    addClass();
+  }
 
-}
-
-function timerInc(){
-    timer++;
-    domTimer.innerHTML = timer
-    //console.log(timer)
-
-}
