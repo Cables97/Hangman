@@ -24,7 +24,7 @@ function buildKeyboard(){
 
 function buildBlankBox(word){
     console.log(word[0])
-    const arrayWord = word.split("");
+    const arrayWord = word[0]["word"].split("");
     arrayWord.forEach(letter => {
         buildBlank(letter)
     });  

@@ -27,10 +27,10 @@ let randomWordDict  = await dictFind(randWord);
 return randomWordDict
 }
 
-//let word = await randomWordGen();
-let word = "canada"
-//const arrayWord = word[0]["word"].split("");
-const arrayWord = word.split("");
+let word = await randomWordGen();
+
+const arrayWord = word[0]["word"].split("");
+
 
 //----------------------------------
 // Keyboard Init
