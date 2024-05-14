@@ -4,14 +4,19 @@
   --key-w: 82px;
   --key-h: 64px;
   --key-text: 48px;
+  --key-gap: 20px;
   --key-color: rgb(255, 255, 255);
   --key-shadow: linear-gradient(to right, #dedede00 85%, #545454ff 98%), linear-gradient(to right, #545454ff 2%, #dedede00 15%), linear-gradient(to top, #545454ff -10%, rgb(148, 148, 148) 6%);
   --key-shadowb: linear-gradient(180deg, rgba(247, 247, 247, 0.26) 80%, rgba(59, 59, 59, 0.096) 100%);
   --key-base: #3b3b3b;
   --key-down: #4d4d4d;
-  --blank-s-h: 120px;
-  --blank-s-w: 100px;
-  --blank-s-color: white;
+  --blank-s-h: 100px;
+  --blank-s-w: 80px;
+  --blank-color: white;
+  --blank-s-color: rgb(219, 198, 173);
+  --blank-s-color-2: rgb(172, 157, 136);
+  --menu-width: 360px;
+  --menu-height: 500px;
 }
 
 /* Base  */
@@ -32,23 +37,195 @@ h1 {
   text-align: center;
 }
 
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  background-color: rgba(87, 87, 87, 0.18);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.content {
+  position: relative;
+  width: 1440px;
+  height: 800px;
+  margin: auto;
+}
+
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.popup .menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 500px;
+  width: 360px;
+  z-index: 20;
+  background-image: linear-gradient(180deg, rgb(243, 220, 104) 0%, #be6e00 100%);
+  border-radius: 10px;
+  border: 4px solid rgb(60, 30, 2);
+  box-shadow: 0 20px 5px -2px rgba(26, 24, 24, 0.25);
+}
+.popup .menu::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  background-image: linear-gradient(90deg, rgba(144, 93, 64, 0) 70%, #64433C 100%), linear-gradient(270deg, rgba(144, 93, 64, 0) 70%, #64433C 100%), linear-gradient(180deg, #996341 1%, #64433C 100%);
+  border: 2px solid rgb(243, 220, 104);
+  box-shadow: 0 0 3px 10px rgba(26, 24, 24, 0.25) inset;
+}
+.popup .menu::after {
+  z-index: -20;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(7% 5% at 3% 3%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(7% 5% at 97% 97%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(7% 5% at 3% 97%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(7% 5% at 97% 3%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%);
+}
+.popup .menu-btns-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+  gap: var(--key-gap);
+  border: 1px solid red;
+}
+.popup .menu-btns-wrapper h1 {
+  padding: 40px 0;
+  font-family: var(--font-toon);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 42px;
+  margin: 0;
+  line-height: 100%;
+  text-transform: capitalize;
+  color: white;
+}
+.popup .menu-btns-wrapper .close-btn {
+  position: absolute;
+  bottom: -30px;
+  height: 80px;
+  width: 80px;
+  border: 4px solid #392001;
+  border-radius: 50%;
+  background: none;
+  font-family: var(--font-toon);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 42px;
+  margin: 0;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+.popup .menu-btns-wrapper .close-btn::after {
+  z-index: -1;
+  content: "";
+  height: 80%;
+  width: 100%;
+  position: absolute;
+  top: 5%;
+  left: 0;
+  border-radius: calc(50% - 2px);
+  background-image: linear-gradient(180deg, lightblue 0%, #807889 100%);
+}
+.popup .menu-btns-wrapper .close-btn::before {
+  z-index: -2;
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: calc(50% - 5px);
+  background-image: linear-gradient(0deg, #383d70 10%, #b0e3ff 90%);
+}
+.popup .menu-btns-wrapper .menu-btn {
+  position: relative;
+  height: 60px;
+  width: 150px;
+  border: 4px solid #392001;
+  border-radius: 15px;
+  background: none;
+  font-family: var(--font-toon);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 32px;
+  margin: 0;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+.popup .menu-btns-wrapper .menu-btn::after {
+  z-index: -1;
+  content: "";
+  height: 80%;
+  width: 100%;
+  position: absolute;
+  top: 5%;
+  left: 0;
+  border-radius: 13px;
+  background-image: linear-gradient(180deg, #FCED7A 0%, #cf8d1d 100%);
+}
+.popup .menu-btns-wrapper .menu-btn::before {
+  z-index: -2;
+  content: "";
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background-image: linear-gradient(0deg, #875204 10%, #fff8b7 90%);
+}
+.popup .popup-bg {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  background-color: rgba(87, 87, 87, 0.18);
+  list-style-type: none;
+  border-radius: 10px;
+  border: 5px groove rgb(161, 161, 161);
+  z-index: 1;
+}
+
 /* Blanks  */
 .blanks-wrapper {
   position: relative;
   display: flex;
-  width: 60%;
-  height: 400px;
-  margin: auto;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
-  padding-top: 100px;
+  align-items: center;
+  width: 100%;
+  height: calc(var(--blank-s-h) * 2);
+  margin: auto;
+  gap: var(--key-gap);
+  border: 1px solid red;
 }
 .blanks-wrapper .blank {
+  position: relative;
   background-color: transparent;
   height: var(--blank-s-h);
-  width: var(--blank-s-w);
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  width: calc(var(--blank-s-w) - 3px);
+  perspective: 1px;
   border-radius: 5px;
 }
 .blanks-wrapper .blank .b-s {
@@ -61,69 +238,87 @@ h1 {
 .blanks-wrapper .blank .left {
   left: 0;
   background-color: var(--blank-s-color);
+  background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 68%, rgba(6, 6, 6, 0.274) 100%);
   border-radius: 5px 0 0 5px;
+  z-index: 99;
 }
 .blanks-wrapper .blank .left::before {
   content: "";
   position: absolute;
   bottom: 0;
-  right: -20px;
+  right: calc(var(--blank-s-w) * 0.2 * -1 + 1px);
   width: 0;
   height: var(--blank-s-h);
   border-bottom: var(--blank-s-h) solid var(--blank-s-color);
-  border-right: 20px solid transparent;
+  border-right: calc(var(--blank-s-w) * 0.2 + 1px) solid transparent;
 }
 .blanks-wrapper .blank .right {
   right: 0;
-  background-color: var(--blank-s-color);
+  background-color: var(--blank-s-color-2);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(6, 6, 6, 0.274) 100%);
   border-radius: 0 5px 5px 0;
+  z-index: 99;
 }
 .blanks-wrapper .blank .right::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -20px;
+  left: calc(var(--blank-s-w) * 0.2 * -1);
   width: 0;
   height: var(--blank-s-h);
-  border-top: calc((var(--blank-s-h))) solid var(--blank-s-color);
-  border-left: 20px solid transparent;
+  border-top: calc((var(--blank-s-h))) solid var(--blank-s-color-2);
+  border-left: calc(var(--blank-s-w) * 0.2 + 1px) solid transparent;
 }
 .blanks-wrapper .blank .letter {
+  display: none;
   height: 100%;
   width: 100%;
-  background-color: var(--blank-s-color);
+  background-color: var(--blank-color);
   display: grid;
   place-items: center;
   font-family: var(--font-toon);
   font-weight: 400;
   font-style: normal;
-  font-size: var(--key-text);
+  font-size: 52px;
   margin: 0;
   line-height: 100%;
   text-transform: capitalize;
   border-radius: 5px;
 }
-.blanks-wrapper .blank-bg {
+.blanks-wrapper .blank .letter::after {
+  content: "";
   position: absolute;
-  opacity: 100%;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%) perspective(30px) rotateX(0.25deg);
-  height: 140%;
-  width: 110%;
+  inset: 0px;
+  border-radius: 5px;
+  background-color: transparent;
+  border-bottom: 5px solid rgba(58, 58, 58, 0.5);
+  border-right: 5px solid rgba(143, 143, 143, 0.5);
+  border-left: 5px solid rgba(199, 199, 199, 0.5);
+  border-top: 5px solid rgba(199, 199, 199, 0.5);
+  z-index: 1;
+}
+.blanks-wrapper .blank .letter::before {
+  content: "";
   z-index: -10;
-  background-color: grey;
+  position: absolute;
+  height: 98%;
+  width: 95%;
+  border-radius: 5px;
+  bottom: -3px;
+  right: -3px;
+  border-bottom: 6px solid #424242;
+  border-right: 6px solid #616161;
 }
 
 /* Keyboard */
 .keyboard {
   position: relative;
   display: flex;
-  width: 60%;
-  margin: auto;
+  width: 80%;
+  margin: 0 auto 50px auto;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: var(--key-gap);
 }
 .keyboard .key {
   position: relative;
@@ -151,7 +346,7 @@ h1 {
   font-family: var(--font-toon);
   font-weight: 400;
   font-style: normal;
-  font-size: var(--key-text);
+  font-size: var(--button-txt);
   margin: 0;
   line-height: 100%;
   text-transform: capitalize;
@@ -180,11 +375,11 @@ h1 {
 }
 .keyboard .keyboard-bg {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 140%;
-  width: 120%;
+  height: 120%;
+  width: 110%;
   z-index: -1;
   -webkit-backdrop-filter: blur(12px);
           backdrop-filter: blur(12px);
@@ -195,10 +390,13 @@ h1 {
 
 /* Animations  */
 .trigger .left {
-  animation: b-s-l 0.8s ease-in-out 0s forwards;
+  animation: b-s-l 2s ease-in-out 0s forwards;
 }
 .trigger .right {
-  animation: b-s-r 0.8s ease-in-out 0s forwards;
+  animation: b-s-r 2s ease-in-out 0s forwards;
+}
+.trigger .letter {
+  display: inherit;
 }
 
 /* Keyframes  */
@@ -212,9 +410,31 @@ h1 {
 }
 @keyframes b-s-l {
   0% {
-    transform: translate(0, 0);
+    transform: rotateZ(0deg);
   }
-  60% {
+  5% {
+    transform: rotateZ(-5deg);
+  }
+  7% {
+    transform: rotateZ(3deg);
+  }
+  10% {
+    transform: rotateZ(-3deg);
+  }
+  15% {
+    transform: rotateZ(2deg);
+  }
+  10% {
+    transform: rotateZ(-1deg);
+  }
+  15% {
+    transform: rotateZ(1deg);
+  }
+  35% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: translate(0, 0);
     opacity: 100%;
   }
   80% {
@@ -227,9 +447,31 @@ h1 {
 }
 @keyframes b-s-r {
   0% {
-    transform: translate(0, 0);
+    transform: rotateZ(0deg);
   }
-  60% {
+  5% {
+    transform: rotateZ(5deg);
+  }
+  7% {
+    transform: rotateZ(-3deg);
+  }
+  10% {
+    transform: rotateZ(3deg);
+  }
+  15% {
+    transform: rotateZ(-2deg);
+  }
+  10% {
+    transform: rotateZ(1deg);
+  }
+  15% {
+    transform: rotateZ(-1deg);
+  }
+  35% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: translate(0, 0);
     opacity: 100%;
   }
   80% {

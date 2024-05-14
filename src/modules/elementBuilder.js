@@ -18,9 +18,14 @@ function buildKeyboard(){
     }
 }
 
+
+
+
+
 //----------------------------------
 // Build Game Board
 //----------------------------------
+
 
 function buildBlankBox(word){
     console.log(word[0])
@@ -54,8 +59,24 @@ function buildBlank(letter){
         blank.append(text);
 }
 
+function initializeBlanks(word){
+
+    buildBlankBox(word);
+    let blanks = document.querySelectorAll(".blank");
+    blanks.forEach(element => {
+        element.addEventListener("click", () => {
+        let letter = element.getElementsByClassName("letter")[0].innerHTML
+        })
+    });
+    for(let i = 0; i < blanks.length; i++){
+        blanks[i].classList.add("show")
+    }
+ 
+}
 
 
 
 
-export { buildKeyboard, buildBlankBox }
+
+
+export { initializeBlanks, buildKeyboard }
