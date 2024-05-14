@@ -3,7 +3,7 @@
   --font-toon: "Poetsen One", sans-serif;
   --key-w: 82px;
   --key-h: 64px;
-  --key-text: 48px;
+  --key-text: 36px;
   --key-gap: 20px;
   --key-color: rgb(255, 255, 255);
   --key-shadow: linear-gradient(to right, #dedede00 85%, #545454ff 98%), linear-gradient(to right, #545454ff 2%, #dedede00 15%), linear-gradient(to top, #545454ff -10%, rgb(148, 148, 148) 6%);
@@ -59,6 +59,7 @@ h1 {
 }
 
 .popup {
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -104,7 +105,6 @@ h1 {
   align-items: center;
   z-index: 100;
   gap: var(--key-gap);
-  border: 1px solid red;
 }
 .popup .menu-btns-wrapper h1 {
   padding: 40px 0;
@@ -142,7 +142,7 @@ h1 {
   top: 5%;
   left: 0;
   border-radius: calc(50% - 2px);
-  background-image: linear-gradient(180deg, lightblue 0%, #807889 100%);
+  background-image: linear-gradient(180deg, rgb(250, 175, 90) 0%, #cd4f00 100%);
 }
 .popup .menu-btns-wrapper .close-btn::before {
   z-index: -2;
@@ -153,7 +153,11 @@ h1 {
   top: 0;
   left: 0;
   border-radius: calc(50% - 5px);
-  background-image: linear-gradient(0deg, #383d70 10%, #b0e3ff 90%);
+  background-image: linear-gradient(0deg, #851400 10%, #fdba97 90%);
+}
+.popup .menu-btns-wrapper .close-btn:hover {
+  filter: brightness(80%);
+  cursor: pointer;
 }
 .popup .menu-btns-wrapper .menu-btn {
   position: relative;
@@ -191,6 +195,10 @@ h1 {
   left: 0;
   border-radius: 10px;
   background-image: linear-gradient(0deg, #875204 10%, #fff8b7 90%);
+}
+.popup .menu-btns-wrapper .menu-btn:hover {
+  filter: brightness(80%);
+  cursor: pointer;
 }
 .popup .popup-bg {
   position: relative;
@@ -301,7 +309,7 @@ h1 {
   content: "";
   z-index: -10;
   position: absolute;
-  height: 98%;
+  height: 95%;
   width: 95%;
   border-radius: 5px;
   bottom: -3px;
@@ -346,7 +354,7 @@ h1 {
   font-family: var(--font-toon);
   font-weight: 400;
   font-style: normal;
-  font-size: var(--button-txt);
+  font-size: var(--key-text);
   margin: 0;
   line-height: 100%;
   text-transform: capitalize;
