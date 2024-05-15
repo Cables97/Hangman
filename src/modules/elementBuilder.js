@@ -2,14 +2,16 @@
 // Build Keyboard
 //----------------------------------
 
+//builds keyboard based on layout string --will implement QWERTY board layout. 
 function buildKeyboard(){
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const arrayAlphabet = alphabet.split("");
+    const additionalKeys = [];
+    const arrayAlphabet = alphabet.split("").concat(additionalKeys);
     const domKeyboard = document.getElementById("keyboard");
-
+    //build keyboard Buttons
     for(let i = 0; i < arrayAlphabet.length ; i++){
         let letter = arrayAlphabet[i];
-        let button = document.createElement('div');
+        let button = document.createElement('button');
         button.classList.add(letter);
         button.classList.add("btn");
         button.classList.add("key");
@@ -18,18 +20,31 @@ function buildKeyboard(){
     }
 }
 
+function keyDown(el){
+    el.preventDefault;
+    el.classList.add('click')
+        setTimeout(() => { el.classList.remove('click') }, 250);
+    el.offsetWidth;
+    if(!el.classList.contains("down")){
+        el.classList.add('down')
+    }
+}
 
-
-
+function resetKeyboard(){
+    const keys = document.querySelectorAll(".key");
+    for ( let i = 0 ; i < keys.length ; i++){
+        keys[i].classList.remove("down")
+    }
+}
 
 //----------------------------------
 // Build Game Board
 //----------------------------------
 
-
 function buildBlankBox(word){
-    console.log(word[0])
-    const arrayWord = word[0]["word"].split("");
+    //console.log("building blanks for: " + word[0]["word"])
+    let arrayWord = word[0]["word"].split("");
+    //console.log(arrayWord);
     arrayWord.forEach(letter => {
         buildBlank(letter)
     });  
@@ -59,8 +74,16 @@ function buildBlank(letter){
         blank.append(text);
 }
 
-function initializeBlanks(word){
+function emptyBlankBox(){
+    let blanks = document.querySelectorAll(".blank");
+    blanks.forEach(element => {
+        //console.log("removing element")
+        element.remove();
+    });
+}
 
+function initializeBlanks(word){
+    emptyBlankBox();
     buildBlankBox(word);
     let blanks = document.querySelectorAll(".blank");
     blanks.forEach(element => {
@@ -74,9 +97,4 @@ function initializeBlanks(word){
  
 }
 
-
-
-
-
-
-export { initializeBlanks, buildKeyboard }
+export { initializeBlanks, buildKeyboard, keyDown }

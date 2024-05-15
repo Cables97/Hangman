@@ -1,15 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Freeman&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Acme&family=Freeman&display=swap");
 :root {
   --font-toon: "Poetsen One", sans-serif;
   --key-w: 82px;
   --key-h: 64px;
   --key-text: 36px;
   --key-gap: 20px;
-  --key-color: rgb(255, 255, 255);
+  --key-color: white;
   --key-shadow: linear-gradient(to right, #dedede00 85%, #545454ff 98%), linear-gradient(to right, #545454ff 2%, #dedede00 15%), linear-gradient(to top, #545454ff -10%, rgb(148, 148, 148) 6%);
-  --key-shadowb: linear-gradient(180deg, rgba(247, 247, 247, 0.26) 80%, rgba(59, 59, 59, 0.096) 100%);
   --key-base: #3b3b3b;
   --key-down: #4d4d4d;
+  --key-animation: button-click 0.1s ease-out 0s 1 forwards;
   --blank-s-h: 100px;
   --blank-s-w: 80px;
   --blank-color: white;
@@ -17,6 +19,8 @@
   --blank-s-color-2: rgb(172, 157, 136);
   --menu-width: 360px;
   --menu-height: 500px;
+  --keyboard-bg-w: 720px;
+  --keyboard-bg-h: 400px;
 }
 
 /* Base  */
@@ -28,38 +32,29 @@ body {
   padding: 0;
   margin: 0;
   background-color: rgb(27, 27, 27);
-  background-image: url(./images/background.png);
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-h1 {
-  text-align: center;
-}
-
-.hud {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 80px;
-  width: 100%;
-  -webkit-backdrop-filter: blur(12px);
-          backdrop-filter: blur(12px);
-  background-color: rgba(87, 87, 87, 0.18);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .content {
   position: relative;
   width: 1440px;
   height: 800px;
-  margin: auto;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid transparent;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url(./images/background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: -99;
 }
 
 .popup {
-  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -107,7 +102,7 @@ h1 {
   gap: var(--key-gap);
 }
 .popup .menu-btns-wrapper h1 {
-  padding: 40px 0;
+  padding: 60px 0 20px;
   font-family: var(--font-toon);
   font-weight: 400;
   font-style: normal;
@@ -116,6 +111,7 @@ h1 {
   line-height: 100%;
   text-transform: capitalize;
   color: white;
+  text-shadow: 1px 1px 5px black;
 }
 .popup .menu-btns-wrapper .close-btn {
   position: absolute;
@@ -215,6 +211,104 @@ h1 {
   z-index: 1;
 }
 
+.win-screen {
+  display: none;
+}
+.win-screen .menu-btns-wrapper .stats {
+  position: relative;
+  height: 30%;
+  width: 50%;
+  background-color: rgb(253, 228, 194);
+  background-image: radial-gradient(75% 75% at 50% 50%, rgb(253, 228, 194) 0%, #f2c786 100%);
+  border-radius: 3px;
+  box-shadow: 3px 3px 4px 0px black;
+  padding: 15px 5px;
+}
+.win-screen .menu-btns-wrapper .stats .line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.win-screen .menu-btns-wrapper .stats h6 {
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 100%;
+  margin: 10px;
+  display: inline-block;
+}
+.win-screen .menu-btns-wrapper .stats::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: radial-gradient(8% 10% at 5% 5%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(8% 10% at 95% 95%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(8% 10% at 5% 95%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%), radial-gradient(8% 10% at 95% 5%, dimgray 23%, #383838 35%, rgba(7, 58, 255, 0) 39%);
+}
+.win-screen .menu-btns-wrapper h3 {
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  color: white;
+  text-shadow: 1px 1px 5px black;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+  background-color: rgba(87, 87, 87, 0.18);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10em;
+}
+.hud .lives-container {
+  border: 1px solid red;
+}
+.hud .lives-container h3 {
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  text-align: center;
+  margin: 0;
+}
+.hud h1 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: 1px solid red;
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 42px;
+  text-align: center;
+}
+.hud .timer {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+}
+.hud .timer h3 {
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 100;
+  margin-right: 5px;
+}
+
 /* Blanks  */
 .blanks-wrapper {
   position: relative;
@@ -225,6 +319,7 @@ h1 {
   width: 100%;
   height: calc(var(--blank-s-h) * 2);
   margin: auto;
+  margin-top: 200px;
   gap: var(--key-gap);
   border: 1px solid red;
 }
@@ -329,15 +424,18 @@ h1 {
   gap: var(--key-gap);
 }
 .keyboard .key {
+  /* side */
   position: relative;
   display: inline-block;
-  height: calc(var(--key-h));
-  width: calc(var(--key-w));
-  background: var(--key-shadow);
+  height: var(--key-h);
+  width: var(--key-w);
+  background: linear-gradient(to right, rgba(222, 222, 222, 0) 85%, #545454 98%), linear-gradient(to right, #545454 2%, rgba(222, 222, 222, 0) 15%), linear-gradient(to top, #545454 -10%, #949494 6%);
   padding: 0;
   border-radius: 10px;
   box-shadow: 0px 0px 0 0px rgba(200, 200, 200, 0.2);
   border: 1px solid #2e2e2e;
+  /* top face */
+  /* base */
 }
 .keyboard .key::after {
   position: absolute;
@@ -358,7 +456,7 @@ h1 {
   margin: 0;
   line-height: 100%;
   text-transform: capitalize;
-  background: var(--key-color);
+  background: white;
 }
 .keyboard .key::before {
   position: absolute;
@@ -366,7 +464,7 @@ h1 {
   z-index: -1;
   height: calc(var(--key-h) + 5px);
   width: calc(var(--key-w) + 5px);
-  background-color: var(--key-base);
+  background-color: #3b3b3b;
   box-shadow: 0px 2px 0 2px #2b2b2b;
   top: 50%;
   left: 50%;
@@ -375,8 +473,11 @@ h1 {
   padding: 0;
   border-radius: 4px;
 }
+.keyboard .key:hover::after {
+  cursor: pointer;
+}
 .keyboard .key.click::after {
-  animation: button-click 0.1s ease-out 0s 1 forwards;
+  animation: var(--key-animation);
 }
 .keyboard .key.down {
   filter: brightness(60%);

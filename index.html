@@ -10,9 +10,23 @@
 
     <div class="content">
         <div class="hud">
-            <h1 id="taco">HANGwdawd MAN</h1>
-            <h1>Time:</h1>
-            <h1 id="timer">awd</h1>
+            <div class="lives-container">
+                <h3>Lives :</h3>
+                <div class="lives">
+                    <i class="fa-solid fa-skull fa-2x"></i>
+                    <i class="fa-solid fa-skull fa-2x"></i>
+                    <i class="fa-solid fa-skull fa-2x"></i>
+                    <i class="fa-solid fa-skull fa-2x"></i>
+                    <i class="fa-solid fa-skull fa-2x"></i>
+                </div>
+            </div>
+
+
+            <h1>Guess a Word!</h1>
+            <div class="timer">
+                <h3>Time : </h3>
+                <h3> 0:00 </h3>
+            </div>
         </div>
 
 
@@ -28,34 +42,56 @@
 
         <div id="keyboard" class="keyboard">
             <!--<div id="btn" class="a key btn" data-label="A"></div>--> 
-            <div class="keyboard-bg">
+            <div class="menu">
             </div>
         </div>
 
+        <div id="menu-wrapper" class="popup">
 
-        <div class="popup">
-
-            <div class="popup-bg"></div>
-            <div class="menu">
+            <div class="menu" id="menu">
                 <div class="menu-btns-wrapper">
-                    <h1>MENU</h1>
-                    <button class="menu-btn">EASY</button>
-                    <button class="menu-btn">MEDIUM</button>
-                    <button class="menu-btn">HARD</button>
+                    <h1>Find A Word!</h1>
+                    <button class="menu-btn" id="easy-mode">EASY</button>
+                    <button class="menu-btn" id="med-mode">MEDIUM</button>
+                    <button class="menu-btn" id="hard-mode">HARD</button>
                     <button class="close-btn">X</button>
                 </div>
 
             </div>
 
-            
+            <div class="menu win-screen" id="win-screen">
+                <div class="menu-btns-wrapper">
+                    <h1>You Did It!</h1>
+
+                    <div class="stats" id="stats">
+                        <div class="line"> 
+                            <h6>Time:</h6>
+                            <h6 id="timer">0:00</h6>
+                        </div>
+                        <div class="line"> 
+                            <h6>Lives remaining:</h6>
+                            <h6 id="lives">5</h6>
+                        </div>
+                        <div class="line"> 
+                            <h6>Hints used:</h6>
+                            <h6 id="hints-used">4</h6>
+                        </div>
+                    </div>
+                    <h3>Play again?</h3>
+                    <button class="menu-btn" id="replay">REPLAY</button>
+
+                </div>
+            </div>
+
+            <div class="popup-bg"></div>
+
         </div>
+
+        
+        <div class="bg"></div>
     </div>
-
-    
-
-    <div class="box" id="box"></div>
     <script type="module" src="./src/index.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/3d817974a5.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

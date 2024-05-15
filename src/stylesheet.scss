@@ -1,6 +1,7 @@
 @use 'sass:color';
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Freeman&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Freeman&display=swap');
 
 :root{
     --font-toon: "Poetsen One", sans-serif;
@@ -11,11 +12,11 @@
 
     --key-gap: 20px;
 
-    --key-color: rgb(255, 255, 255);
+    --key-color: white;
     --key-shadow: linear-gradient(to right, #dedede00 85%, #545454ff 98%), linear-gradient(to right, #545454ff 2%, #dedede00 15%), linear-gradient(to top, #545454ff -10%, rgb(148, 148, 148) 6%);
-    --key-shadowb: linear-gradient(180deg, rgba(247, 247, 247, 0.26)  80%, rgba(59, 59, 59, 0.096) 100%);
     --key-base: #3b3b3b;
     --key-down: #4d4d4d;
+    --key-animation: button-click 0.1s ease-out 0s 1 forwards;
 
 
     --blank-s-h: 100px;
@@ -27,8 +28,17 @@
     --menu-width: 360px;
     --menu-height: 500px;
 
+    --keyboard-bg-w: 720px;
+    --keyboard-bg-h: 400px;
+
 }
 
+@mixin text($size){
+    font-family: "Acme", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: $size;  
+}
 
 
 @mixin button-txt($size) {
@@ -44,6 +54,68 @@
 @mixin border {
     border:1px solid red;
 }        
+
+@mixin key($height, $width, $color, $animation) {
+    /* side */
+    position: relative;
+    display: inline-block;
+    height: $height;
+    width: $width;
+    background: linear-gradient(to right, #dedede00 85%, color.adjust($color,$red: -171, $green: -171, $blue: -171) 98%), linear-gradient(to right, color.adjust($color,$red: -171, $green: -171, $blue: -171) 2%, #dedede00 15%), linear-gradient(to top, color.adjust($color,$red: -171, $green: -171, $blue: -171) -10%, color.adjust($color,$red: -107, $green: -107, $blue: -107) 6%);
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0  0px rgba(200, 200, 200, 20%);
+    border: 1px solid rgba($color: rgb(46, 46, 46), $alpha: 100%);
+
+    /* top face */
+    &::after{
+        position: absolute;
+        content: attr(data-label);
+        //z-index: -1;
+        height: $height;
+        width: $width;
+        bottom: 10px;
+        left:50%;
+        transform: translate(-50%,0);
+        box-shadow: 0 0 16px 2px rgba($color: #383838, $alpha: .75) inset;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        @include button-txt(var(--key-text));
+        background: $color;
+        //transition: 0.1s;
+    }
+    /* base */
+    &::before{
+        position: absolute;
+        content: "";
+        z-index: -1;
+        height: calc( $height + 5px);
+        width: calc( $width + 5px);
+        background-color: #3b3b3b ;
+        box-shadow: 0px 2px 0 2px #2b2b2b ;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        margin:0;
+        padding:0;
+        border-radius: 4px;
+    }
+
+    &:hover::after{
+        //bottom:8px;
+        cursor: pointer;
+    }
+
+    &.click::after{
+        animation: $animation
+    }
+
+    &.down{
+        filter: brightness(60%);
+    }
+
+}
 
 @mixin button($color, $border-radius){
     border: 4px solid #392001;
@@ -88,40 +160,35 @@ body{
     padding:0;
     margin:0;
     background-color: rgb(27, 27, 27);
-    background-image: url(./images/background.png);
-    background-repeat: no-repeat;
-    background-position: center; 
+
 
 }
 
-h1{
-    text-align: center;
-}
 
-.hud{
-    position: absolute;
-    top:0;
-    left:0;
-    height:80px;
-    width:100%;
-    backdrop-filter: blur(12px);
-    background-color: rgba($color: #575757, $alpha: 0.18);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+
 
 .content{
     position: relative;
     width: 1440px;
     height: 800px;
-    margin: auto;
-    //background-image: url(./images/background.png);
+    margin:0 auto;
+    padding: 0;
+    border:1px solid transparent;
 }
 
+.bg{
+    position: absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    background-image: url(./images/background.png);
+    background-repeat: no-repeat;
+    background-position: center; 
+    z-index: -99;
+}
 
 .popup{
-    display: none;
+    //display: none;
     position: absolute;
     top:0;
     left:0;
@@ -156,41 +223,42 @@ h1{
             height:100%;
             width:100%;
             background-image: radial-gradient(7% 5% at 3% 3%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(7% 5% at 97% 97%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(7% 5% at 3% 97%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(7% 5% at 97% 3%, #696969FF 23%, #383838FF 35%, #073AFF00 39%);    }
+    }
+
+    .menu-btns-wrapper{
+        position: relative;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 100;
+        gap: var(--key-gap);
+        h1{
+            padding: 60px 0 20px;
+            @include button-txt(42px);
+            color:white;
+            text-shadow: 1px 1px 5px black;
         }
 
-        .menu-btns-wrapper{
+        .close-btn{
+            position: absolute;
+            bottom:-30px;
+            height:80px;
+            width:80px;
+            @include button(rgb(250, 175, 90), 50%);
+            @include button-txt(42px)
+        }
+
+        .menu-btn{
             position: relative;
-            height:100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 100;
-            gap: var(--key-gap);
-            h1{
-                padding: 40px 0;
-                @include button-txt(42px);
-                color:white;
-            }
-
-            .close-btn{
-                position: absolute;
-                bottom:-30px;
-                height:80px;
-                width:80px;
-                @include button(rgb(250, 175, 90), 50%);
-                @include button-txt(42px)
-            }
-
-            .menu-btn{
-                position: relative;
-                height:60px;
-                width:150px;
-                @include button(#FCED7A, 15px);
-                @include button-txt(32px)
-            }
-
-
+            height:60px;
+            width:150px;
+            @include button(#FCED7A, 15px);
+            @include button-txt(32px)
         }
+
+
+    }
 
     .popup-bg{
         position: relative;
@@ -207,11 +275,96 @@ h1{
     }
 }
 
+.win-screen{
+    display: none;
+    .menu-btns-wrapper{
+        .stats{
+            position: relative;
+            height:30%;
+            width: 50%;
+            background-color: rgb(253, 228, 194);
+            background-image: radial-gradient(75% 75% at 50% 50%, rgb(253, 228, 194) 0%, #F2C786FF 100%);
+            border-radius: 3px;
+            box-shadow: 3px 3px 4px 0px black;
+            padding: 15px 5px;
+            .line{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between
+            }
+            h6{
+                @include text(18px);
+                line-height: 100%;
+                margin:10px;
+                display: inline-block;
+            }
+
+            &::after{
+                position: absolute;
+                content: "";
+                top:0;
+                left:0;
+                height:100%;
+                width:100%;
+                background-image: radial-gradient(8% 10% at 5% 5%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(8% 10% at 95% 95%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(8% 10% at 5% 95%, #696969FF 23%, #383838FF 35%, #073AFF00 39%),radial-gradient(8% 10% at 95% 5%, #696969FF 23%, #383838FF 35%, #073AFF00 39%); 
+            }
+        }
+        h3{
+            @include text(24px);
+            color: white;
+            text-shadow: 1px 1px 5px black;
+            padding:0;
+            margin-bottom:0;
+        }
+    }
+
+}
+
+.hud{
+    position: absolute;
+    top:0;
+    left:0;
+    height:80px;
+    width:100%;
+    backdrop-filter: blur(12px);
+    background-color: rgba($color: #575757, $alpha: 0.18);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10em;
+
+    .lives-container{
+        @include border();
+        h3{
+            @include text(18px);
+            text-align: center;
+            margin:0;
+
+        }
+    }
 
 
+    h1{
+        position: absolute;
+        left:50%;
+        transform: translate(-50%, 0);
+        @include border();
+        @include text(42px);
+        text-align: center;
+    }
+    .timer{
+        @include border();
+        display: flex;
+        flex-direction: row;
+        h3{
+            @include text(20px);
+            font-weight:100;
+            margin-right: 5px;
+        }
 
-
-
+    }
+}
 
 
 /* Blanks  */
@@ -224,9 +377,9 @@ h1{
     width: 100%;
     height: calc(var(--blank-s-h) * 2 );
     margin:auto;
+    margin-top: 200px;
     gap: var(--key-gap);
     @include border;
-    
     .blank{
     position: relative;
     background-color: transparent;
@@ -329,64 +482,7 @@ h1{
     gap: var(--key-gap);
 
     .key{
-        position: relative;
-        display: inline-block;
-        height: calc( var(--key-h) );
-        width: calc( var(--key-w) );
-        background: var(--key-shadow);
-        padding: 0;
-        border-radius: 10px;
-        box-shadow: 0px 0px 0  0px rgba(200, 200, 200, 20%);
-        border: 1px solid rgba($color: rgb(46, 46, 46), $alpha: 100%);
-
-
-        &::after{
-            position: absolute;
-            content: attr(data-label);
-            //z-index: -1;
-            height: var(--key-h);
-            width: var(--key-w);
-            bottom: 10px;
-            left:50%;
-            transform: translate(-50%,0);
-            box-shadow: 0 0 16px 2px rgba($color: #383838, $alpha: .75) inset;
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            @include button-txt(var(--key-text));
-            background: var(--key-color);
-            //transition: 0.1s;
-        }
-
-        &::before{
-            position: absolute;
-            content: "";
-            z-index: -1;
-            height: calc( var(--key-h) + 5px);
-            width: calc( var(--key-w) + 5px);
-            background-color: var(--key-base);
-            box-shadow: 0px 2px 0 2px #2b2b2b ;
-            top:50%;
-            left:50%;
-            transform: translate(-50%,-50%);
-            margin:0;
-            padding:0;
-            border-radius: 4px;
-        }
-
-        &:hover::after{
-            //bottom:8px;
-        }
-
-        &.click::after{
-            animation: button-click 0.1s ease-out 0s 1 forwards;
-        }
-
-
-        &.down{
-            filter: brightness(60%);
-        }
-
+        @include key(var(--key-h), var(--key-w), white, var(--key-animation))
     }
 
     .keyboard-bg{
