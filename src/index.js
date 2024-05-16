@@ -1,7 +1,7 @@
-import { initializeBlanks, buildKeyboard, keyDown } from "./modules/elementBuilder.js";
-import { timerInit } from "./modules/hud.js";
-//import { randomWordGen , randomWordMaster } from "./modules/getSetFetch.js";
+import { initBlanks, buildKeyboard, keyDown , resetKeyboard } from "./modules/elementBuilder.js";
+import { initTimer , menuToggle , endToggle, menuClose , livesDec , initLives} from "./modules/hud.js";
 import { letterCheck, addClassWithDelay } from "./modules/smallFunctions.js";
+
 
 //----------------------------------
 // variables
@@ -45,8 +45,11 @@ async function randWordFind(minLetters, maxLetters){
         
 }
 
-let word = [{word:"placeholder"}];
-let arrayWord = word[0]["word"].split("");
+let word = [{word:"place-holder"}];
+
+let cleanStr = word[0]["word"].replace(/[^a-zA-Z0-9]/g, '');
+
+let arrayWord = cleanStr.split("");
 
 //----------------------------------
 // Keyboard Init
@@ -63,22 +66,31 @@ function initKeyboard(){
 
 function keyboardDown(element){
         //click animation
-    keyDown(element);
     let letter = element.dataset.label;
     arrChosenLetters.push(letter)
     if(letterCheck(element.dataset.label, arrayWord)){
-        let blanks = document.getElementById("blank-wrapper").querySelectorAll("." + letter);
-        addClassWithDelay(blanks, 'trigger');
-            //add all instances off the letter to the found letters
-        for(let i = 0; i < blanks.length; i++){
-            arrFoundLetters.push(letter);
+        if(!element.classList.contains("down")){
+            let blanks = document.getElementById("blank-wrapper").querySelectorAll("." + letter);
+            addClassWithDelay(blanks, 'trigger');
+                //add all instances off the letter to the found letters
+            for(let i = 0; i < blanks.length; i++){
+                arrFoundLetters.push(letter);
+            }
+            console.log(arrFoundLetters)
+            winCheck(arrFoundLetters, arrayWord);
+        }else{
+            console.log("Found Key is already pressed")
         }
-        console.log(arrFoundLetters)
-        winCheck(arrFoundLetters, arrayWord);
+
     } else{//fail
-
-
+        let bool = element.classList.contains("down");
+        if(bool){
+            console.log("Key is already pressed")
+        }else{
+            livesDec();
+        }
     }
+    keyDown(element);
 
 }
 
@@ -93,8 +105,19 @@ initKeyboard();
 //  Start Game
 //----------------------------------
 
+onLoad();
+
+function onLoad(){
+    menuToggle();
+}
+
 function startGame(){
-    initializeBlanks(word);
+    arrChosenLetters = [];
+    arrFoundLetters = [];
+    resetKeyboard();
+    initBlanks(word);
+    initTimer();
+    menuClose();
 }
 
 //----------------------------------
@@ -102,22 +125,29 @@ function startGame(){
 //----------------------------------
 document.getElementById("easy-mode").addEventListener ( "click" , modeEasy)
 async function modeEasy(){
-    word = await randWordFind( 3,6 )
-    arrayWord = word[0]["word"].split("");
+    //word = await randWordFind( 3,6 )
+    //arrayWord = word[0]["word"].split("");
     console.log( "matching word:  " + word[0]["word"]);
+    initLives(8);
     startGame();
 }
 
 document.getElementById("med-mode").addEventListener ( "click" , modeMedium)
 async function modeMedium(){
     word = await randWordFind( 6,9 )
+    arrayWord = word[0]["word"].split("");
     console.log( "matching word:  " + word[0]["word"]);
+    initLives(5);
+    startGame();
 }
 
 document.getElementById("hard-mode").addEventListener ( "click" , modeHard)
 async function modeHard(){
     word = await randWordFind( 9,12 )
+    arrayWord = word[0]["word"].split("");
     console.log( "matching word:  " + word[0]["word"]);
+    initLives(3);
+    startGame();
 }
 
 //----------------------------------
@@ -134,14 +164,13 @@ function winCheck(chosenWords, goalWord){
 }
 
 function youWin(){
-    let menuWrapper = document.getElementById("menu-wrapper")
-    let menu = document.getElementById("menu")
-    let winScreen = document.getElementById("win-screen")
-
-
-    menu.style.display = "none";
-    winScreen.style.display = "";
-
+    console.log("YouWin!!")
+    setTimeout(() => {
+        endToggle(true);
+    }, 2000);
+    
 }
 
-
+document.getElementById('replay').addEventListener("click", () =>{
+    menuToggle();
+})

@@ -4,19 +4,36 @@
 
 //builds keyboard based on layout string --will implement QWERTY board layout. 
 function buildKeyboard(){
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    const alphabet = "abcdefghi-jklmnopqrs-tuvwxyz";
+    const qwerty = "qwertyuiop-asdfghjkl-zxcvbnm"
+
+    let keyboard = qwerty;
     const additionalKeys = [];
-    const arrayAlphabet = alphabet.split("").concat(additionalKeys);
+    const arrayAlphabet = keyboard.split("").concat(additionalKeys);
     const domKeyboard = document.getElementById("keyboard");
     //build keyboard Buttons
     for(let i = 0; i < arrayAlphabet.length ; i++){
-        let letter = arrayAlphabet[i];
-        let button = document.createElement('button');
-        button.classList.add(letter);
-        button.classList.add("btn");
-        button.classList.add("key");
-        button.dataset.label = letter;
-        domKeyboard.append(button);
+
+        if (/^[a-zA-Z]+$/.test(keyboard[i])) {
+            console.log("True: All letters are sorted.");
+            let letter = arrayAlphabet[i];
+            let button = document.createElement('button');
+            button.classList.add(letter);
+            button.classList.add("btn");
+            button.classList.add("key");
+            button.dataset.label = letter;
+            domKeyboard.append(button);
+
+        } else {
+            //let br = document.createElement('br');
+            //domKeyboard.append(br);
+
+            let div = document.createElement('div');
+            div.classList.add("empty-key-space");
+            domKeyboard.append(div);
+        }
+
+
     }
 }
 
@@ -46,7 +63,11 @@ function buildBlankBox(word){
     let arrayWord = word[0]["word"].split("");
     //console.log(arrayWord);
     arrayWord.forEach(letter => {
-        buildBlank(letter)
+        if (/^[a-zA-Z]+$/.test(letter)) {
+            buildBlank(letter)
+        } else {
+            shownBlank(letter);
+        }
     });  
 }
 
@@ -82,7 +103,7 @@ function emptyBlankBox(){
     });
 }
 
-function initializeBlanks(word){
+function initBlanks(word){
     emptyBlankBox();
     buildBlankBox(word);
     let blanks = document.querySelectorAll(".blank");
@@ -97,4 +118,23 @@ function initializeBlanks(word){
  
 }
 
-export { initializeBlanks, buildKeyboard, keyDown }
+function shownBlank(letter){
+    const domBlanksBox = document.getElementById("blank-wrapper");
+
+    let blank = document.createElement('div');
+        blank.classList.add("blank");
+        blank.classList.add(letter)
+        domBlanksBox.append(blank);
+
+    let text = document.createElement('div');
+        text.classList.add("letter");
+        text.innerHTML = letter;
+        blank.append(text);
+}
+
+
+
+
+
+
+export { initBlanks, buildKeyboard, keyDown , resetKeyboard}

@@ -9,45 +9,33 @@
 <body>
 
     <div class="content">
+        
         <div class="hud">
-            <div class="lives-container">
+            <div class="lives-container" id="lives-container">
                 <h3>Lives :</h3>
-                <div class="lives">
-                    <i class="fa-solid fa-skull fa-2x"></i>
-                    <i class="fa-solid fa-skull fa-2x"></i>
-                    <i class="fa-solid fa-skull fa-2x"></i>
-                    <i class="fa-solid fa-skull fa-2x"></i>
-                    <i class="fa-solid fa-skull fa-2x"></i>
+                <div class="lives" id="lives">
                 </div>
             </div>
-
-
             <h1>Guess a Word!</h1>
             <div class="timer">
                 <h3>Time : </h3>
-                <h3> 0:00 </h3>
+                <h3 id="timer"> 0:00 </h3>
+            </div>
+
+            <div class="hint">
+                <i class="fa-solid fa-question fa-xl"></i>
             </div>
         </div>
 
-
         <div class="blanks-wrapper" id="blank-wrapper">
-
-            <!--<div class="blank show" id="blank">
-                <div class="b-s left"></div>
-                <div class="b-s right"></div>
-                <div class="letter">A</div>
-            </div> -->
-
+            <div class="fuzz-bg"></div>
         </div>
 
         <div id="keyboard" class="keyboard">
-            <!--<div id="btn" class="a key btn" data-label="A"></div>--> 
-            <div class="menu">
-            </div>
+            <div class="fuzz-bg"></div>
         </div>
 
         <div id="menu-wrapper" class="popup">
-
             <div class="menu" id="menu">
                 <div class="menu-btns-wrapper">
                     <h1>Find A Word!</h1>
@@ -59,22 +47,23 @@
 
             </div>
 
-            <div class="menu win-screen" id="win-screen">
-                <div class="menu-btns-wrapper">
-                    <h1>You Did It!</h1>
 
+            <div class="end-screen menu" id="end-screen">
+                <div class="menu-btns-wrapper">
+                    <h1 id="end-title">Oh No!</h1>
+                    <h3 id="end-sub">You ran out of lives!</h3>
                     <div class="stats" id="stats">
                         <div class="line"> 
                             <h6>Time:</h6>
-                            <h6 id="timer">0:00</h6>
+                            <h6 id="win-timer">0:00</h6>
                         </div>
                         <div class="line"> 
                             <h6>Lives remaining:</h6>
-                            <h6 id="lives">5</h6>
+                            <h6 id="win-lives"></h6>
                         </div>
                         <div class="line"> 
                             <h6>Hints used:</h6>
-                            <h6 id="hints-used">4</h6>
+                            <h6 id="win-hints-used">4</h6>
                         </div>
                     </div>
                     <h3>Play again?</h3>
@@ -83,11 +72,13 @@
                 </div>
             </div>
 
+
+
             <div class="popup-bg"></div>
 
         </div>
 
-        
+
         <div class="bg"></div>
     </div>
     <script type="module" src="./src/index.js"></script>
