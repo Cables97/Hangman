@@ -401,6 +401,29 @@ body{
 
 }
 
+.hint-box{
+    position: relative;
+    margin:auto;
+    width: 60%;
+    height:calc((1em + 20px ) * 4);
+    margin: 100px auto 25px;
+    .hint{
+        position: relative;
+        padding:5px;
+        margin:0;
+        line-height: 1em;
+        @include text(24px);
+        color: rgb(255, 255, 255);
+        text-shadow: 1px 1px 2px black;
+        .part-of-speech{
+            @include border();
+            display: inline-block;
+            width: 140px;
+            text-transform:uppercase;
+        }
+
+    }
+}
 
 
 /* Blanks  */
@@ -411,9 +434,8 @@ body{
     justify-content: center;
     align-items: center;
     width: 90%;
-    height: calc(var(--blank-s-h) * 2 );
+    height: calc(var(--blank-s-h) * 1.5 );
     margin:auto;
-    margin-top: 200px;
     gap: var(--key-gap);
     .blank{
         position: relative;
@@ -555,7 +577,6 @@ body{
         background-color: rgba($color: #575757, $alpha: 0.18);
         list-style-type: none;
         border-radius: 10px;
-
     }
 
 

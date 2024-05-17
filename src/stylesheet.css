@@ -371,6 +371,32 @@ body {
   cursor: pointer;
 }
 
+.hint-box {
+  position: relative;
+  margin: auto;
+  width: 60%;
+  height: calc((1em + 20px) * 4);
+  margin: 100px auto 25px;
+}
+.hint-box .hint {
+  position: relative;
+  padding: 5px;
+  margin: 0;
+  line-height: 1em;
+  font-family: "Acme", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 2px black;
+}
+.hint-box .hint .part-of-speech {
+  border: 1px solid red;
+  display: inline-block;
+  width: 140px;
+  text-transform: uppercase;
+}
+
 /* Blanks  */
 .blanks-wrapper {
   position: relative;
@@ -379,9 +405,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 90%;
-  height: calc(var(--blank-s-h) * 2);
+  height: calc(var(--blank-s-h) * 1.5);
   margin: auto;
-  margin-top: 200px;
   gap: var(--key-gap);
 }
 .blanks-wrapper .blank {

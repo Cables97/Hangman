@@ -1,5 +1,5 @@
 import { initBlanks, buildKeyboard, keyDown , resetKeyboard } from "./modules/elementBuilder.js";
-import { initTimer , menuToggle , endToggle, menuClose , livesDec , initLives} from "./modules/hud.js";
+import { initTimer , menuToggle , endToggle, menuClose , livesDec , initLives , giveHint , initHints} from "./modules/hud.js";
 import { letterCheck, addClassWithDelay } from "./modules/smallFunctions.js";
 
 
@@ -34,14 +34,14 @@ async function randWordFind(minLetters, maxLetters){
             console.log(randWord + " too long " + randWord.length)
             }
     } 
-        const dictionaryURL = await fetch('http://api.dictionaryapi.dev/api/v2/entries/en/' + randWord);
-        const dictWord = await dictionaryURL.json();
-        console.log(dictWord);
-        if((typeof dictWord[0]["word"] === 'string' || dictWord[0]["word"] instanceof String)){
-            return dictWord
-        }else{
-            console.log("error")
-        }
+    const dictionaryURL = await fetch('http://api.dictionaryapi.dev/api/v2/entries/en/' + randWord);
+    const dictWord = await dictionaryURL.json();
+    console.log(dictWord);
+    if((typeof dictWord[0]["word"] === 'string' || dictWord[0]["word"] instanceof String)){
+        return dictWord
+    }else{
+        console.log("error")
+    }
         
 }
 
@@ -118,6 +118,7 @@ function startGame(){
     initBlanks(word);
     initTimer();
     menuClose();
+    initHints(word);
 }
 
 //----------------------------------
@@ -125,8 +126,8 @@ function startGame(){
 //----------------------------------
 document.getElementById("easy-mode").addEventListener ( "click" , modeEasy)
 async function modeEasy(){
-    //word = await randWordFind( 3,6 )
-    //arrayWord = word[0]["word"].split("");
+    word = await randWordFind( 3,6 )
+    arrayWord = word[0]["word"].split("");
     console.log( "matching word:  " + word[0]["word"]);
     initLives(8);
     startGame();
@@ -173,4 +174,10 @@ function youWin(){
 
 document.getElementById('replay').addEventListener("click", () =>{
     menuToggle();
+})
+
+
+document.getElementById("hint-btn").addEventListener("click" , () => {
+    console.log("hint");
+    giveHint(word);
 })

@@ -2,15 +2,11 @@
 
 let timer = 0
 let livesLeft = 0;
-let hintsUsed = 69;
-
 
 
 //----------------------------------
 // Timer
 //----------------------------------
-
-
 
 function initTimer(){
     let domTimer = document.getElementById("timer");
@@ -32,7 +28,7 @@ function initLives(numLives){
     let lives = document.getElementById("lives")
     livesLeft = numLives
 
-    document.getElementById("lives-container").style.width = numLives * 34 + "px";
+    document.getElementById("lives-container").style.width = numLives * 38 + "px";
 
 
     let blanks = lives.querySelectorAll(".life");
@@ -88,6 +84,57 @@ function livesDec(){
     
     //liveToRemove.classList.remove("live-add");
     //liveToRemove.classList.add("live-remove");
+}
+
+//----------------------------------
+// Hints
+//----------------------------------
+
+function giveHint(word){
+    let randNum, outDef, outPos, meaning;
+    let hintBox = document.getElementById("hint-box");
+    let wordMeanings = word[0]["meanings"];
+
+    //meanings
+    if (wordMeanings.length > 1 ){
+        randNum = Math.floor(Math.random() * wordMeanings.length);
+        meaning = wordMeanings[randNum];
+
+    } else{
+        meaning = wordMeanings[0];
+    }
+
+    //definitions
+    if(meaning["definitions"].length > 1){
+        randNum = Math.floor(Math.random() * meaning["definitions"].length);
+        outDef = meaning["definitions"][randNum]["definition"];
+        outPos = meaning["partOfSpeech"]
+    }
+    else{
+        outDef = meaning["definitions"][0]["definition"];
+        outPos = meaning["partOfSpeech"]
+    }
+    console.log(outPos)
+    console.log(outDef)
+
+    //out
+    let hint = document.createElement('h2');
+    hint.classList.add("hint");
+    hint.innerHTML = "<span class='part-of-speech'>" + outPos + ":</span>" + outDef ;
+    hintBox.append(hint);
+}
+
+function clearHints(){
+    let hintBox = document.getElementById("hint-box");
+    let hints = hintBox.querySelectorAll(".hint");
+    hints.forEach(element => {
+       element.remove(); 
+    });
+}
+
+function initHints(word){
+    clearHints();
+    giveHint(word)
 }
 
 //----------------------------------
@@ -166,19 +213,21 @@ function endToggle(winLose){
 
 
 function winScreenUpdate(){
-    let timer = document.getElementById("timer").innerHTML;
-    let winLives = document.getElementById("win-lives");
+    let time = document.getElementById("timer").innerHTML;
     let winTimer = document.getElementById("win-timer");
+
+    let winLives = document.getElementById("win-lives");
     let lives = document.getElementById("lives").querySelectorAll(".life").length;
 
     let winHints = document.getElementById("win-hints-used");
+    let hintCount = document.getElementById("hint-box").querySelectorAll(".hint").length - 1;
 
-    winTimer.innerHTML = timer;
-    console.log("timer: " + timer);
+    winTimer.innerHTML = time;
+    console.log("timer: " + time);
     winLives.innerHTML = lives;
     console.log("lives: " + livesLeft);
-    winHints.innerHTML = hintsUsed ;
-    console.log("hints: " + hintsUsed);
+    winHints.innerHTML = hintCount ;
+    console.log("hints: " + hintCount);
 }
 
 function menuClose(){
@@ -212,4 +261,4 @@ function menuClose(){
 
 
 
-export { initTimer , menuToggle , endToggle , menuClose , livesDec, initLives}
+export { initTimer , menuToggle , endToggle , menuClose , livesDec, initLives , giveHint , initHints}
