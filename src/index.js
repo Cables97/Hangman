@@ -127,7 +127,8 @@ function startGame(){
 document.getElementById("easy-mode").addEventListener ( "click" , modeEasy)
 async function modeEasy(){
     word = await randWordFind( 3,6 )
-    arrayWord = word[0]["word"].split("");
+    let cleanStr = word[0]["word"].replace(/[^a-zA-Z0-9]/g, '');
+    arrayWord = cleanStr.split("");
     console.log( "matching word:  " + word[0]["word"]);
     initLives(8);
     startGame();
@@ -136,7 +137,8 @@ async function modeEasy(){
 document.getElementById("med-mode").addEventListener ( "click" , modeMedium)
 async function modeMedium(){
     word = await randWordFind( 6,9 )
-    arrayWord = word[0]["word"].split("");
+    let cleanStr = word[0]["word"].replace(/[^a-zA-Z0-9]/g, '');
+    arrayWord = cleanStr.split("");
     console.log( "matching word:  " + word[0]["word"]);
     initLives(5);
     startGame();
@@ -145,7 +147,8 @@ async function modeMedium(){
 document.getElementById("hard-mode").addEventListener ( "click" , modeHard)
 async function modeHard(){
     word = await randWordFind( 9,12 )
-    arrayWord = word[0]["word"].split("");
+    let cleanStr = word[0]["word"].replace(/[^a-zA-Z0-9]/g, '');
+    arrayWord = cleanStr.split("");
     console.log( "matching word:  " + word[0]["word"]);
     initLives(3);
     startGame();

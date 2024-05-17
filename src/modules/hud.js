@@ -95,34 +95,38 @@ function giveHint(word){
     let hintBox = document.getElementById("hint-box");
     let wordMeanings = word[0]["meanings"];
 
-    //meanings
-    if (wordMeanings.length > 1 ){
-        randNum = Math.floor(Math.random() * wordMeanings.length);
-        meaning = wordMeanings[randNum];
+    if(document.getElementById("hint-box").querySelectorAll(".hint").length <= 3){
+        //meanings
+        if (wordMeanings.length > 1 ){
+            randNum = Math.floor(Math.random() * wordMeanings.length);
+            meaning = wordMeanings[randNum];
 
-    } else{
-        meaning = wordMeanings[0];
-    }
+        } else{
+            meaning = wordMeanings[0];
+        }
 
-    //definitions
-    if(meaning["definitions"].length > 1){
-        randNum = Math.floor(Math.random() * meaning["definitions"].length);
-        outDef = meaning["definitions"][randNum]["definition"];
-        outPos = meaning["partOfSpeech"]
-    }
-    else{
-        outDef = meaning["definitions"][0]["definition"];
-        outPos = meaning["partOfSpeech"]
-    }
-    console.log(outPos)
-    console.log(outDef)
+        //definitions
+        if(meaning["definitions"].length > 1){
+            randNum = Math.floor(Math.random() * meaning["definitions"].length);
+            outDef = meaning["definitions"][randNum]["definition"];
+            outPos = meaning["partOfSpeech"]
+        }
+        else{
+            outDef = meaning["definitions"][0]["definition"];
+            outPos = meaning["partOfSpeech"]
+        }
+        console.log(outPos)
+        console.log(outDef)
 
-    //out
-    let hint = document.createElement('h2');
-    hint.classList.add("hint");
-    hint.innerHTML = "<span class='part-of-speech'>" + outPos + ":</span>" + outDef ;
-    hintBox.append(hint);
+        //out
+        let hint = document.createElement('h2');
+        hint.classList.add("hint");
+        hint.innerHTML = "<span class='part-of-speech'>" + outPos + ":</span>" + outDef ;
+        hintBox.append(hint);
+    }
 }
+
+
 
 function clearHints(){
     let hintBox = document.getElementById("hint-box");
