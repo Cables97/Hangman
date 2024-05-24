@@ -34,7 +34,7 @@ async function randWordFind(minLetters, maxLetters){
             console.log(randWord + " too long " + randWord.length)
             }
     } 
-    const dictionaryURL = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + randWord);
+    const dictionaryURL = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + randWord );
     const dictWord = await dictionaryURL.json();
     console.log(dictWord);
     if((typeof dictWord[0]["word"] === 'string' || dictWord[0]["word"] instanceof String)){
