@@ -97,8 +97,30 @@ function keyboardDown(element){
 initKeyboard();
 
 //----------------------------------
-// Blanks Init
+// Buttons
 //----------------------------------
+
+
+document.getElementById('replay').addEventListener("click", () =>{
+    menuToggle();
+})
+
+document.getElementById("hint-btn").addEventListener("click" , () => {
+    console.log("hint");
+    giveHint(word);
+})
+
+document.getElementById("close-btn").addEventListener("click" , () =>{
+
+    if (confirm("Are you sure you want to leave?\n") == true) {
+        window.open("https://cables97.github.io/"); 
+        window.close();
+    }
+})
+
+
+
+
 
 
 //----------------------------------
@@ -174,13 +196,3 @@ function youWin(){
     }, 2000);
     
 }
-
-document.getElementById('replay').addEventListener("click", () =>{
-    menuToggle();
-})
-
-
-document.getElementById("hint-btn").addEventListener("click" , () => {
-    console.log("hint");
-    giveHint(word);
-})

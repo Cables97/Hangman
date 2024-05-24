@@ -94,8 +94,22 @@ function giveHint(word){
     let randNum, outDef, outPos, meaning;
     let hintBox = document.getElementById("hint-box");
     let wordMeanings = word[0]["meanings"];
+    let hintCount = 0;
+    let hintList = hintBox.querySelectorAll(".hint")
 
-    if(document.getElementById("hint-box").querySelectorAll(".hint").length <= 3){
+
+    if(hintList){
+        hintCount = hintList.length;
+    }
+    
+    let defCount = 0;
+    wordMeanings.forEach(meaning => {
+        defCount += meaning["definitions"].length
+    });
+
+
+
+    if(hintCount < defCount && hintCount <= 3){
         //meanings
         if (wordMeanings.length > 1 ){
             randNum = Math.floor(Math.random() * wordMeanings.length);
@@ -117,6 +131,10 @@ function giveHint(word){
         }
         console.log(outPos)
         console.log(outDef)
+
+
+
+
 
         //out
         let hint = document.createElement('h2');
